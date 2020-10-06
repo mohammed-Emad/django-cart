@@ -43,7 +43,7 @@ class Cart:
             item.unit_profit = unit_profit
             item.save()
         else:
-            models.Item.objects.create(cart=self.cart, product=product, unit_price=unit_price, unit_vat=unit_vat ,unit_profit=unit_profit quantity=quantity)
+            models.Item.objects.create(cart=self.cart, product=product, unit_price=unit_price, unit_vat=unit_vat ,unit_profit=unit_profit ,quantity=quantity)
 
     def remove(self, product):
         item = models.Item.objects.filter(cart=self.cart, product=product).first()
