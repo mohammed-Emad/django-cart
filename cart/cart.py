@@ -34,11 +34,13 @@ class Cart:
         request.session[CART_ID] = cart.id
         return cart
 
-    def add(self, product, unit_price, quantity=1):
+    def add(self, product, unit_price, quantity=1 ,unit_vat ,unit_profit):
         item = models.Item.objects.filter(cart=self.cart, product=product).first()
         if item:
             item.unit_price = unit_price
             item.quantity += int(quantity)
+            item.unit_vat    = unit_vat
+            item.unit_profit = unit_profit
             item.save()
         else:
             models.Item.objects.create(cart=self.cart, product=product, unit_price=unit_price, quantity=quantity)
@@ -50,7 +52,7 @@ class Cart:
         else:
             raise ItemDoesNotExist
 
-    def update(self, product, quantity, unit_price=None):
+    def update(self, product, quantity, unit_price=None ,unit_vat ,unit_profit):
         item = models.Item.objects.filter(cart=self.cart, product=product).first()
         if item:
             if quantity == 0:
@@ -58,6 +60,8 @@ class Cart:
             else:
                 item.unit_price = unit_price
                 item.quantity = int(quantity)
+                item.unit_vat    = unit_vat
+                item.unit_profit = unit_profit
                 item.save()
         else:
             raise ItemDoesNotExist
